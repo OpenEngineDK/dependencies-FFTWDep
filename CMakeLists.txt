@@ -1,0 +1,19 @@
+IF(EXISTS ${FFTW_DEPS_SRC_DIR})
+  MESSAGE (${FFTW_DEPS_SRC_DIR})
+  MESSAGE (${FFTW_DEPS_LIB_DIR}/libfftw3.a)
+
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${FFTW_DEPS_LIB_DIR}/libfftw3.a
+    COMMAND ./configure --prefix=${OE_DEPS_BUILD_DIR}/fftw3
+    COMMAND make -j2
+    COMMAND make install
+    WORKING_DIRECTORY ${FFTW_DEPS_SRC_DIR}
+    )
+  
+  ADD_CUSTOM_TARGET(FFTWDep ALL
+    DEPENDS ${FFTW_DEPS_LIB_DIR}/libfftw3.a
+    )
+
+  install(CODE "")
+
+ENDIF(EXISTS ${FFTW_DEPS_SRC_DIR})
